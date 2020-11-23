@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                 setState(() {
                   if (double.tryParse(value) == null) {
                     setState(() {
-                      error = 'Introdu un numar';
+                      error = 'Enter a number!';
                     });
                   } else {
                     error = null;
