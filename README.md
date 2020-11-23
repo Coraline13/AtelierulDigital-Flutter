@@ -1,4 +1,4 @@
-# atelieruldigital_flutter
+# Atelierul Digital - Flutter
 
 A new Flutter project.
 
