@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                 setState(() {
                   if (double.tryParse(value) == null) {
                     setState(() {
-                      error = 'Enter a number!';
+                      error = 'Enter a number';
                     });
                   } else {
                     error = null;
@@ -65,7 +65,6 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             RaisedButton(
-              // textColor: Colors.white,
               color: Colors.white30,
               onPressed: () {
                 if (error == null) {
@@ -80,7 +79,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
