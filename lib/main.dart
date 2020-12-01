@@ -1,4 +1,4 @@
-import 'src/01/currency_convertor.dart' as app;
+import 'src/02/guess_my_number.dart' as app;
 
 void main() {
   app.main();
