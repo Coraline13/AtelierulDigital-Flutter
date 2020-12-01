@@ -28,26 +28,26 @@ class _HomePageState extends State<HomePage> {
   int _inputNumber;
   String _error;
 
-  bool _isSquare(int number) {
+  bool _isPerfectSquare(int number) {
     return number == pow(sqrt(number).round(), 2);
   }
 
-  bool _isTriangular(int number) {
+  bool _isPerfectCube(int number) {
     return number == pow(pow(number, 1 / 3).round(), 3);
   }
 
   String _beautifulMessage() {
     String _str = 'Number $_inputNumber is ';
 
-    if (_isSquare(_inputNumber)) {
-      if (_isTriangular(_inputNumber)) {
-        return _str + 'both SQUARE and TRIANGULAR.';
+    if (_isPerfectSquare(_inputNumber)) {
+      if (_isPerfectCube(_inputNumber)) {
+        return _str + 'both PERFECT SQUARE and PERFECT CUBE.';
       }
-      return _str + 'SQUARE.';
-    } else if (_isTriangular(_inputNumber)) {
-      return _str + 'TRIANGULAR.';
+      return _str + 'PERFECT SQUARE.';
+    } else if (_isPerfectCube(_inputNumber)) {
+      return _str + 'PERFECT CUBE.';
     }
-    return _str + 'neither SQUARE or TRIANGULAR.';
+    return _str + 'neither PERFECT SQUARE or PERFECT CUBE.';
   }
 
   Future<void> _showMyDialog() async {
@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: <Widget>[
               const Text(
-                'Please input a number to see if it is square or triangular.',
+                'Please input a number to see if it is perfect square or perfect cube.',
                 style: TextStyle(
                   fontSize: 18,
                 ),
