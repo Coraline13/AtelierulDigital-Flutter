@@ -34,8 +34,13 @@ class _HomePageState extends State<HomePage> {
     _numberToBeGuessed = _random.nextInt(99) + 1;
   }
 
+  void _resetNumberToBeGuessed() {
+    final Random _random = Random();
+    _numberToBeGuessed = _random.nextInt(99) + 1;
+  }
+
   void _guessMyNumber() async {
-    final String str = 'You tried $_numberToBeGuessed\n';
+    final String str = 'You tried $_inputNumber\n';
 
     if (_inputNumber < _numberToBeGuessed) {
       _message = str + 'Try higher';
@@ -52,12 +57,23 @@ class _HomePageState extends State<HomePage> {
           return AlertDialog(
             title: Text(_inputNumber.toString()),
             content: Text(_message),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: _resetNumberToBeGuessed,
+                child: const Text('Try again!'),
+              ),
+              FlatButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('OK'),
+              ),
+            ],
           );
         });
   }
 
   @override
   Widget build(BuildContext context) {
+    print('build' + _message);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -115,9 +131,9 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                   RaisedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (!_error) {
-                        _guessMyNumber();
+                        await _guessMyNumber();
                       }
                     },
                     child: const Text('Guess'),
