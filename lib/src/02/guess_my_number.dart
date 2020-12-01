@@ -133,7 +133,9 @@ class _HomePageState extends State<HomePage> {
                   RaisedButton(
                     onPressed: () async {
                       if (!_error) {
-                        await _guessMyNumber();
+                        setState(() {
+                          _guessMyNumber();
+                        });
                       }
                     },
                     child: const Text('Guess'),
