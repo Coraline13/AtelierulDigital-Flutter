@@ -26,23 +26,32 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _inputNumber, _numberToBeGuessed;
-  String _error;
+  bool _error = true;
+  String _message = '';
 
-  Future<void> _guessMyNumber() async {
-    String str = 'You tried $_numberToBeGuessed\n';
+  _HomePageState() {
+    final Random _random = Random();
+    _numberToBeGuessed = _random.nextInt(99) + 1;
+  }
+
+  void _guessMyNumber() async {
+    final String str = 'You tried $_numberToBeGuessed\n';
 
     if (_inputNumber < _numberToBeGuessed) {
-      return str + 'Try higher';
+      _message = str + 'Try higher';
+      return;
     } else if (_inputNumber > _numberToBeGuessed) {
-      return str + 'Try lower';
+      _message = str + 'Try lower';
+      return;
     }
-    return showDialog(
+    _message = str + 'You guessed right.';
+    await showDialog<void>(
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(_inputNumber.toString()),
-            content: Text(str + 'You guessed right.'),
+            content: Text(_message),
           );
         });
   }
@@ -72,22 +81,34 @@ class _HomePageState extends State<HomePage> {
               ),
               textAlign: TextAlign.center,
             ),
+            Text(
+              _message,
+              style: TextStyle(
+                fontSize: 45,
+              ),
+              textAlign: TextAlign.center,
+            ),
             Card(
+              elevation: 5,
               child: Column(
                 children: <Widget>[
+                  const Text(
+                    'Try a number',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 27,
+                    ),
+                  ),
                   TextField(
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      errorText: _error,
-                    ),
                     onChanged: (String value) {
                       setState(() {
                         if (int.tryParse(value) == null) {
                           setState(() {
-                            _error = 'Enter a number';
+                            _error = true;
                           });
                         } else {
-                          _error = null;
+                          _error = false;
                           _inputNumber = int.parse(value);
                         }
                       });
@@ -95,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   RaisedButton(
                     onPressed: () {
-                      if (_error == null) {
+                      if (!_error) {
                         _guessMyNumber();
                       }
                     },
