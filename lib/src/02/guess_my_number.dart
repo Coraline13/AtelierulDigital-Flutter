@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -25,21 +25,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _inputNumber, _numberToBeGuessed;
-  bool _error = true;
-  String _message = '';
-
   _HomePageState() {
     final Random _random = Random();
     _numberToBeGuessed = _random.nextInt(99) + 1;
   }
+
+  int _inputNumber, _numberToBeGuessed;
+  bool _error = true;
+  String _message = '';
 
   void _resetNumberToBeGuessed() {
     final Random _random = Random();
     _numberToBeGuessed = _random.nextInt(99) + 1;
   }
 
-  void _guessMyNumber() async {
+  Future<void> _guessMyNumber() async {
     final String str = 'You tried $_inputNumber\n';
 
     if (_inputNumber < _numberToBeGuessed) {
@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Text(
               _message,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 45,
               ),
               textAlign: TextAlign.center,

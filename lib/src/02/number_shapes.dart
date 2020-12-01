@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   String _beautifulMessage() {
-    String _str = 'Number $_inputNumber is ';
+    final String _str = 'Number $_inputNumber is ';
 
     if (_isPerfectSquare(_inputNumber)) {
       if (_isPerfectCube(_inputNumber)) {

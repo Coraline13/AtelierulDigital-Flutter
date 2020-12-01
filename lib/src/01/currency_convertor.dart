@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Currency convertor'),
+        title: const Text('Currency convertor'),
       ),
       body: Center(
         child: Column(
@@ -71,11 +71,11 @@ class _HomePageState extends State<HomePage> {
                   _euroToRonConversion();
                 }
               },
-              child: Text('CONVERT!'),
+              child: const Text('CONVERT!'),
             ),
             Text(
               _valueInRon,
-              style: TextStyle(fontSize: 30, height: 2),
+              style: const TextStyle(fontSize: 30, height: 2),
             ),
           ],
         ),
