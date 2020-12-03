@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Tic Tac Toe',
-      debugShowCheckedModeBanner: false,
+      // debugShowCheckedModeBanner: false,
       home: GamePage(),
     );
   }
@@ -28,8 +28,6 @@ class _GamePageState extends State<GamePage> {
   List<String> _boardState;
   bool _playerXTurn;
   String _gameResult;
-  double _size;
-
 
   @override
   void initState() {
@@ -37,7 +35,6 @@ class _GamePageState extends State<GamePage> {
     _boardState = List<String>.filled(9, '');
     _playerXTurn = true;
     _gameResult = '';
-    _size = 0.0;
   }
 
   /// -1 => game not finished
@@ -102,18 +99,17 @@ class _GamePageState extends State<GamePage> {
     setState(() {
       _boardState[i] = _playerXTurn ? 'X' : '0';
       _playerXTurn = !_playerXTurn;
-      _size = 60.0;
       switch (_whichGameState()) {
         case -1:
           return;
         case 0:
-          _gameResult = "It's a tie!";
+          _gameResult = "IT'S A TIE!";
           break;
         case 1:
-          _gameResult = 'X-player wins!';
+          _gameResult = 'X-PLAYER WINS!';
           break;
         case 2:
-          _gameResult = '0-player wins!';
+          _gameResult = '0-PLAYER WINS!';
           break;
       }
     });
@@ -131,96 +127,101 @@ class _GamePageState extends State<GamePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff24135d),
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'TIC TAC TOE',
-          style: TextStyle(
-            color: Color(0xffffd033),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: const Color(0xff6648c4),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Container(
-                width: 300.0,
-                height: 300.0,
-                decoration: BoxDecoration(
-                  color: const Color(0xff6648c4),
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                child: GridView.builder(
-                  padding: const EdgeInsets.all(10.0),
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 9,
-                  itemBuilder: (BuildContext context, int i) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xff332267),
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _playGame(i);
-                          });
-                        },
-                        child: AnimatedContainer(
-                          duration: const Duration(seconds: 2),
-                          curve: Curves.fastOutSlowIn,
-                          // color: Colors.red,
-                          width: _boardState[i] == '' ? 0.00 : 60.0,
-                          child: _boardState[i] == ''
-                              ? const Text('')
-                              : (_boardState[i] == 'X'
-                                  ? const Icon(
-                                      Icons.clear,
-                                      // size: _size,
-                                      color: Color(0xffeb1750),
-                                    )
-                                  : const Icon(
-                                      Icons.radio_button_unchecked,
-                                      // size: _size,
-                                      color: Color(0xffffd033),
-                                    )),
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   title: const Text(
+      //     'TIC TAC TOE',
+      //     style: TextStyle(
+      //       color: Color(0xffffd033),
+      //       fontWeight: FontWeight.bold,
+      //     ),
+      //   ),
+      //   backgroundColor: const Color(0xff6648c4),
+      // ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(45.0),
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: 300.0,
+                  height: 300.0,
+                  decoration: BoxDecoration(
+                    color: const Color(0xff6648c4),
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: GridView.builder(
+                    padding: const EdgeInsets.all(10.0),
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 9,
+                    itemBuilder: (BuildContext context, int i) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xff332267),
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
-                      ),
-                    );
-                  },
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 1.0,
-                    crossAxisSpacing: 10.0,
-                    mainAxisSpacing: 10.0,
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _playGame(i);
+                            });
+                          },
+                          child: AnimatedOpacity(
+                            duration: const Duration(milliseconds: 700),
+                            curve: Curves.ease,
+                            opacity: _boardState[i] == '' ? 0.0 : 1.0,
+                            child: _boardState[i] == ''
+                                ? const Text('')
+                                : (_boardState[i] == 'X'
+                                    ? const Icon(
+                                        Icons.clear,
+                                        size: 60.0,
+                                        color: Color(0xffeb1750),
+                                      )
+                                    : const Icon(
+                                        Icons.radio_button_unchecked,
+                                        size: 60.0,
+                                        color: Color(0xffffd033),
+                                      )),
+                          ),
+                        ),
+                      );
+                    },
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      childAspectRatio: 1.0,
+                      crossAxisSpacing: 10.0,
+                      mainAxisSpacing: 10.0,
+                    ),
                   ),
                 ),
-              ),
-              Text(_gameResult,
-                  style: const TextStyle(
-                    color: Color(0xffeb1750),
-                    fontSize: 30.0,
-                  )),
-              RaisedButton(
-                color: const Color(0xff6648c4),
-                onPressed: _resetGame,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
+                Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Text(_gameResult,
+                      style: const TextStyle(
+                        color: Color(0xffeb1750),
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                      )),
                 ),
-                elevation: 0.0,
-                child: const Text(
-                  'Play again',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 17.0,
+                RaisedButton(
+                  color: const Color(0xff6648c4),
+                  onPressed: _resetGame,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  elevation: 0.0,
+                  child: const Text(
+                    'PLAY AGAIN',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
