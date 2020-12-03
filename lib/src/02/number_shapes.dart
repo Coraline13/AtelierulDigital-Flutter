@@ -59,7 +59,8 @@ class _HomePageState extends State<HomePage> {
             title: Text(_inputNumber.toString()),
             content: Text(_beautifulMessage()),
           );
-        });
+        },
+    );
   }
 
   @override
@@ -98,7 +99,8 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ],
-          )),
+          ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (_error == null) {
