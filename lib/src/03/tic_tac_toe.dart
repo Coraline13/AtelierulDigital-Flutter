@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -26,16 +25,20 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
-  _GamePageState() {
-    setState(() {
-      _boardState = List<String>.filled(10, '');
-    });
-  }
-
   List<String> _boardState;
-  bool _playerXTurn = true;
-  String _gameResult = '';
-  Color _xColor = const Color(0xff332267);
+  bool _playerXTurn;
+  String _gameResult;
+  double _size;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _boardState = List<String>.filled(9, '');
+    _playerXTurn = true;
+    _gameResult = '';
+    _size = 0.0;
+  }
 
   /// -1 => game not finished
   /// 0 => game finished with tie
@@ -43,7 +46,7 @@ class _GamePageState extends State<GamePage> {
   /// 2 => second 0-player wins
   int _whichGameState() {
     /// verify rows
-    for (int i = 1; i <= 7; i += 3) {
+    for (int i = 0; i < 7; i += 3) {
       if (_boardState[i] != '' && _boardState[i] == _boardState[i + 1] && _boardState[i + 1] == _boardState[i + 2]) {
         if (_boardState[i] == 'X') {
           return 1;
@@ -54,7 +57,7 @@ class _GamePageState extends State<GamePage> {
     }
 
     /// verify columns
-    for (int i = 1; i <= 3; i++) {
+    for (int i = 0; i < 3; i++) {
       if (_boardState[i] != '' && _boardState[i] == _boardState[i + 3] && _boardState[i + 3] == _boardState[i + 6]) {
         if (_boardState[i] == 'X') {
           return 1;
@@ -65,8 +68,8 @@ class _GamePageState extends State<GamePage> {
     }
 
     /// verify first diagonal
-    if (_boardState[1] != '' && _boardState[1] == _boardState[5] && _boardState[5] == _boardState[9]) {
-      if (_boardState[1] == 'X') {
+    if (_boardState[0] != '' && _boardState[0] == _boardState[4] && _boardState[4] == _boardState[8]) {
+      if (_boardState[0] == 'X') {
         return 1;
       } else {
         return 2;
@@ -74,8 +77,8 @@ class _GamePageState extends State<GamePage> {
     }
 
     /// verify second diagonal
-    if (_boardState[3] != '' && _boardState[3] == _boardState[5] && _boardState[5] == _boardState[7]) {
-      if (_boardState[3] == 'X') {
+    if (_boardState[2] != '' && _boardState[2] == _boardState[4] && _boardState[4] == _boardState[6]) {
+      if (_boardState[2] == 'X') {
         return 1;
       } else {
         return 2;
@@ -83,7 +86,7 @@ class _GamePageState extends State<GamePage> {
     }
 
     /// verify if there is any empty tile
-    for (int i = 1; i <= 9; i++) {
+    for (int i = 0; i < 9; i++) {
       if (_boardState[i] == '') {
         return -1;
       }
@@ -92,26 +95,35 @@ class _GamePageState extends State<GamePage> {
   }
 
   void _playGame(int i) {
-    _boardState[i] = _playerXTurn ? 'X' : '0';
-    _playerXTurn = !_playerXTurn;
-    switch (_whichGameState()) {
-      case -1:
-        return;
-      case 0:
-        _gameResult = "It's a tie!";
-        break;
-      case 1:
-        _gameResult = 'X-player wins!';
-        break;
-      case 2:
-        _gameResult = '0-player wins!';
-        break;
+    if (_boardState[i] != '' || _gameResult != '') {
+      return;
     }
+
+    setState(() {
+      _boardState[i] = _playerXTurn ? 'X' : '0';
+      _playerXTurn = !_playerXTurn;
+      _size = 60.0;
+      switch (_whichGameState()) {
+        case -1:
+          return;
+        case 0:
+          _gameResult = "It's a tie!";
+          break;
+        case 1:
+          _gameResult = 'X-player wins!';
+          break;
+        case 2:
+          _gameResult = '0-player wins!';
+          break;
+      }
+    });
   }
 
   void _resetGame() {
     setState(() {
       _boardState = List<String>.filled(9, '');
+      _playerXTurn = true;
+      _gameResult = '';
     });
   }
 
@@ -149,29 +161,33 @@ class _GamePageState extends State<GamePage> {
                   itemBuilder: (BuildContext context, int i) {
                     return Container(
                       decoration: BoxDecoration(
-                        color: _boardState[i] == '' ? Colors.blue : (_boardState[i] == 'X' ? Colors.red : Colors.green),
+                        color: const Color(0xff332267),
                         borderRadius: BorderRadius.circular(15.0),
                       ),
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 500),
-                        width: _boardState[i].isNotEmpty ? 0.0 : 60.0,
-                        height: _boardState[i].isNotEmpty ? 0.0 : 60.0,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _playGame(i);
-                            });
-                          },
-                          // child: const Icon(
-                          //   Icons.radio_button_unchecked,
-                          //   size: 60.0,
-                          //   color: Color(0xffffd033),
-                          // ),
-                          // child: const Icon(
-                          //   Icons.clear,
-                          //   size: 60.0,
-                          //   color: Color(0xffeb1750),
-                          // ),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _playGame(i);
+                          });
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(seconds: 2),
+                          curve: Curves.fastOutSlowIn,
+                          // color: Colors.red,
+                          width: _boardState[i] == '' ? 0.00 : 60.0,
+                          child: _boardState[i] == ''
+                              ? const Text('')
+                              : (_boardState[i] == 'X'
+                                  ? const Icon(
+                                      Icons.clear,
+                                      // size: _size,
+                                      color: Color(0xffeb1750),
+                                    )
+                                  : const Icon(
+                                      Icons.radio_button_unchecked,
+                                      // size: _size,
+                                      color: Color(0xffffd033),
+                                    )),
                         ),
                       ),
                     );
@@ -184,14 +200,23 @@ class _GamePageState extends State<GamePage> {
                   ),
                 ),
               ),
+              Text(_gameResult,
+                  style: const TextStyle(
+                    color: Color(0xffeb1750),
+                    fontSize: 30.0,
+                  )),
               RaisedButton(
                 color: const Color(0xff6648c4),
                 onPressed: _resetGame,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                elevation: 0.0,
                 child: const Text(
-                  'Reset game',
+                  'Play again',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 15.0,
+                    fontSize: 17.0,
                   ),
                 ),
               ),
