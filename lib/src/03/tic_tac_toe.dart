@@ -11,9 +11,26 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Tic Tac Toe',
-      // debugShowCheckedModeBanner: false,
       home: GamePage(),
     );
+  }
+}
+
+class Player {
+  Player({
+    @required this.name,
+    @required this.score,
+    @required this.playerSymbol,
+    @required this.turn,
+  });
+
+  final String name;
+  int score;
+  Icon playerSymbol;
+  bool turn;
+
+  void wonGame(int points) {
+    score += points;
   }
 }
 
@@ -28,6 +45,8 @@ class _GamePageState extends State<GamePage> {
   List<String> _boardState;
   bool _playerXTurn;
   String _gameResult;
+  List<int> _winnerLine;
+  Player _playerX, _playerO;
 
   @override
   void initState() {
@@ -35,6 +54,7 @@ class _GamePageState extends State<GamePage> {
     _boardState = List<String>.filled(9, '');
     _playerXTurn = true;
     _gameResult = '';
+    _winnerLine = <int>[];
   }
 
   /// -1 => game not finished
@@ -45,6 +65,8 @@ class _GamePageState extends State<GamePage> {
     /// verify rows
     for (int i = 0; i < 7; i += 3) {
       if (_boardState[i] != '' && _boardState[i] == _boardState[i + 1] && _boardState[i + 1] == _boardState[i + 2]) {
+        _winnerLine.addAll(<int>[i, i + 1, i + 2]);
+
         if (_boardState[i] == 'X') {
           return 1;
         } else {
@@ -56,6 +78,8 @@ class _GamePageState extends State<GamePage> {
     /// verify columns
     for (int i = 0; i < 3; i++) {
       if (_boardState[i] != '' && _boardState[i] == _boardState[i + 3] && _boardState[i + 3] == _boardState[i + 6]) {
+        _winnerLine.addAll(<int>[i, i + 3, i + 6]);
+
         if (_boardState[i] == 'X') {
           return 1;
         } else {
@@ -66,6 +90,8 @@ class _GamePageState extends State<GamePage> {
 
     /// verify first diagonal
     if (_boardState[0] != '' && _boardState[0] == _boardState[4] && _boardState[4] == _boardState[8]) {
+      _winnerLine.addAll(<int>[0, 4, 8]);
+
       if (_boardState[0] == 'X') {
         return 1;
       } else {
@@ -75,6 +101,8 @@ class _GamePageState extends State<GamePage> {
 
     /// verify second diagonal
     if (_boardState[2] != '' && _boardState[2] == _boardState[4] && _boardState[4] == _boardState[6]) {
+      _winnerLine.addAll(<int>[2, 4, 6]);
+
       if (_boardState[2] == 'X') {
         return 1;
       } else {
@@ -120,6 +148,7 @@ class _GamePageState extends State<GamePage> {
       _boardState = List<String>.filled(9, '');
       _playerXTurn = true;
       _gameResult = '';
+      _winnerLine = <int>[];
     });
   }
 
@@ -158,7 +187,7 @@ class _GamePageState extends State<GamePage> {
                     itemBuilder: (BuildContext context, int i) {
                       return Container(
                         decoration: BoxDecoration(
-                          color: const Color(0xff332267),
+                          color: _winnerLine.contains(i) ? const Color(0xff27d075) : const Color(0xff332267),
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         child: GestureDetector(
@@ -174,15 +203,15 @@ class _GamePageState extends State<GamePage> {
                             child: _boardState[i] == ''
                                 ? const Text('')
                                 : (_boardState[i] == 'X'
-                                    ? const Icon(
+                                    ? Icon(
                                         Icons.clear,
                                         size: 60.0,
-                                        color: Color(0xffeb1750),
+                                        color: _winnerLine.contains(i) ? Colors.white : const Color(0xffeb1750),
                                       )
-                                    : const Icon(
+                                    : Icon(
                                         Icons.radio_button_unchecked,
                                         size: 60.0,
-                                        color: Color(0xffffd033),
+                                        color: _winnerLine.contains(i) ? Colors.white : const Color(0xffffd033),
                                       )),
                           ),
                         ),
@@ -197,7 +226,10 @@ class _GamePageState extends State<GamePage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(32.0),
+                  padding: const EdgeInsets.only(
+                    top: 40.0,
+                    bottom: 40.0,
+                  ),
                   child: Text(_gameResult,
                       style: const TextStyle(
                         color: Color(0xffeb1750),
