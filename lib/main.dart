@@ -1,4 +1,4 @@
-import 'src/02/guess_my_number.dart' as app;
+import 'src/03/tic_tac_toe.dart' as app;
 
 void main() {
   app.main();

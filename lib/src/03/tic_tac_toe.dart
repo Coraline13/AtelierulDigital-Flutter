@@ -19,17 +19,17 @@ class MyApp extends StatelessWidget {
 class Player {
   Player({
     @required this.name,
-    @required this.score,
+    this.score = 0.0,
     @required this.playerSymbol,
-    @required this.turn,
+    @required this.color,
   });
 
   final String name;
-  int score;
-  Icon playerSymbol;
-  bool turn;
+  double score;
+  IconData playerSymbol;
+  Color color;
 
-  void wonGame(int points) {
+  void awardPoints(double points) {
     score += points;
   }
 }
@@ -43,18 +43,45 @@ class GamePage extends StatefulWidget {
 
 class _GamePageState extends State<GamePage> {
   List<String> _boardState;
-  bool _playerXTurn;
-  String _gameResult;
+  String _gameStartMessage, _gameResult;
   List<int> _winnerLine;
-  Player _playerX, _playerO;
+  List<Player> _players;
+  bool _isPlayer1Turn, _isPlayer1First;
 
   @override
   void initState() {
     super.initState();
     _boardState = List<String>.filled(9, '');
-    _playerXTurn = true;
     _gameResult = '';
+    _gameStartMessage = "X-PLAYER'S TURN";
     _winnerLine = <int>[];
+    _players = <Player>[
+      Player(
+        name: 'X-PLAYER',
+        playerSymbol: Icons.clear,
+        color: const Color(0xffeb1750),
+      ),
+      Player(
+        name: '0-PLAYER',
+        playerSymbol: Icons.radio_button_unchecked,
+        color: const Color(0xffffd033),
+      ),
+    ];
+    _isPlayer1Turn = _isPlayer1First = true;
+  }
+
+  int _check(int i, int j, int k) {
+    if (_boardState[i] != '' && _boardState[i] == _boardState[j] && _boardState[j] == _boardState[k]) {
+      _winnerLine.addAll(<int>[i, j, k]);
+
+      if (_boardState[i] == 'X') {
+        return 1;
+      } else {
+        return 2;
+      }
+    }
+
+    return -1;
   }
 
   /// -1 => game not finished
@@ -63,51 +90,32 @@ class _GamePageState extends State<GamePage> {
   /// 2 => second 0-player wins
   int _whichGameState() {
     /// verify rows
+    int result = -1;
     for (int i = 0; i < 7; i += 3) {
-      if (_boardState[i] != '' && _boardState[i] == _boardState[i + 1] && _boardState[i + 1] == _boardState[i + 2]) {
-        _winnerLine.addAll(<int>[i, i + 1, i + 2]);
-
-        if (_boardState[i] == 'X') {
-          return 1;
-        } else {
-          return 2;
-        }
+      result = _check(i, i + 1, i + 2);
+      if (result != -1) {
+        return result;
       }
     }
 
     /// verify columns
     for (int i = 0; i < 3; i++) {
-      if (_boardState[i] != '' && _boardState[i] == _boardState[i + 3] && _boardState[i + 3] == _boardState[i + 6]) {
-        _winnerLine.addAll(<int>[i, i + 3, i + 6]);
-
-        if (_boardState[i] == 'X') {
-          return 1;
-        } else {
-          return 2;
-        }
+      result = _check(i, i + 3, i + 6);
+      if (result != -1) {
+        return result;
       }
     }
 
     /// verify first diagonal
-    if (_boardState[0] != '' && _boardState[0] == _boardState[4] && _boardState[4] == _boardState[8]) {
-      _winnerLine.addAll(<int>[0, 4, 8]);
-
-      if (_boardState[0] == 'X') {
-        return 1;
-      } else {
-        return 2;
-      }
+    result = _check(0, 4, 8);
+    if (result != -1) {
+      return result;
     }
 
     /// verify second diagonal
-    if (_boardState[2] != '' && _boardState[2] == _boardState[4] && _boardState[4] == _boardState[6]) {
-      _winnerLine.addAll(<int>[2, 4, 6]);
-
-      if (_boardState[2] == 'X') {
-        return 1;
-      } else {
-        return 2;
-      }
+    result = _check(2, 4, 6);
+    if (result != -1) {
+      return result;
     }
 
     /// verify if there is any empty tile
@@ -119,25 +127,31 @@ class _GamePageState extends State<GamePage> {
     return 0;
   }
 
-  void _playGame(int i) {
+  void _playTurn(int i) {
+    _gameStartMessage = '';
+
     if (_boardState[i] != '' || _gameResult != '') {
       return;
     }
 
     setState(() {
-      _boardState[i] = _playerXTurn ? 'X' : '0';
-      _playerXTurn = !_playerXTurn;
+      _boardState[i] = _isPlayer1Turn ? 'X' : '0';
+      _isPlayer1Turn = !_isPlayer1Turn;
       switch (_whichGameState()) {
         case -1:
-          return;
+          break;
         case 0:
           _gameResult = "IT'S A TIE!";
+          _players[0].awardPoints(0.5);
+          _players[1].awardPoints(0.5);
           break;
         case 1:
           _gameResult = 'X-PLAYER WINS!';
+          _players[0].awardPoints(1.0);
           break;
         case 2:
           _gameResult = '0-PLAYER WINS!';
+          _players[1].awardPoints(1.0);
           break;
       }
     });
@@ -146,9 +160,12 @@ class _GamePageState extends State<GamePage> {
   void _resetGame() {
     setState(() {
       _boardState = List<String>.filled(9, '');
-      _playerXTurn = true;
+      /// alternate who starts the game
+      /// if last game was not finished, the same player starts
+      _isPlayer1Turn = _isPlayer1First = _gameResult == '' ? _isPlayer1First : !_isPlayer1First;
       _gameResult = '';
       _winnerLine = <int>[];
+      _gameStartMessage = _isPlayer1Turn ? "X-PLAYER'S TURN" : "0-PLAYER'S TURN";
     });
   }
 
@@ -156,26 +173,26 @@ class _GamePageState extends State<GamePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff24135d),
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   title: const Text(
-      //     'TIC TAC TOE',
-      //     style: TextStyle(
-      //       color: Color(0xffffd033),
-      //       fontWeight: FontWeight.bold,
-      //     ),
-      //   ),
-      //   backgroundColor: const Color(0xff6648c4),
-      // ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(45.0),
-          child: Center(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  width: 300.0,
-                  height: 300.0,
+          padding: const EdgeInsets.only(top: 35.0, bottom: 35.0, left: 50.0, right: 50.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: Text(
+                    _gameStartMessage == '' ? _gameResult : _gameStartMessage,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 27.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )),
+              AspectRatio(
+                aspectRatio: 1.0,
+                child: Container(
                   decoration: BoxDecoration(
                     color: const Color(0xff6648c4),
                     borderRadius: BorderRadius.circular(20.0),
@@ -193,7 +210,7 @@ class _GamePageState extends State<GamePage> {
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
-                              _playGame(i);
+                              _playTurn(i);
                             });
                           },
                           child: AnimatedOpacity(
@@ -204,14 +221,14 @@ class _GamePageState extends State<GamePage> {
                                 ? const Text('')
                                 : (_boardState[i] == 'X'
                                     ? Icon(
-                                        Icons.clear,
+                                        _players[0].playerSymbol,
                                         size: 60.0,
-                                        color: _winnerLine.contains(i) ? Colors.white : const Color(0xffeb1750),
+                                        color: _winnerLine.contains(i) ? Colors.white : _players[0].color,
                                       )
                                     : Icon(
-                                        Icons.radio_button_unchecked,
+                                        _players[1].playerSymbol,
                                         size: 60.0,
-                                        color: _winnerLine.contains(i) ? Colors.white : const Color(0xffffd033),
+                                        color: _winnerLine.contains(i) ? Colors.white : _players[1].color,
                                       )),
                           ),
                         ),
@@ -225,19 +242,10 @@ class _GamePageState extends State<GamePage> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 40.0,
-                    bottom: 40.0,
-                  ),
-                  child: Text(_gameResult,
-                      style: const TextStyle(
-                        color: Color(0xffeb1750),
-                        fontSize: 30.0,
-                        fontWeight: FontWeight.bold,
-                      )),
-                ),
-                RaisedButton(
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0, bottom: 40.0),
+                child: RaisedButton(
                   color: const Color(0xff6648c4),
                   onPressed: _resetGame,
                   shape: RoundedRectangleBorder(
@@ -248,12 +256,55 @@ class _GamePageState extends State<GamePage> {
                     'PLAY AGAIN',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18.0,
+                      fontSize: 17.0,
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 2,
+                itemBuilder: (BuildContext context, int j) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          border: Border.all(
+                            color: const Color(0xff6648c4),
+                            width: 2.0,
+                          )),
+                      child: ListTile(
+                        title: Text(
+                          _players[j].name,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Text(
+                          '${_players[j].score} pct',
+                          style: const TextStyle(color: Color(0xff27d075)),
+                        ),
+                        leading: Icon(
+                          _players[j].playerSymbol,
+                          size: 40.0,
+                          color: _players[j].color,
+                        ),
+                        trailing: _players[j].score > (_players[0].score + _players[1].score) / 2
+                            ? const Icon(
+                                Icons.emoji_events,
+                                size: 30.0,
+                                color: Color(0xffffd033),
+                              )
+                            : const Text(''),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
         ),
       ),
