@@ -71,7 +71,9 @@ class _GamePageState extends State<GamePage> {
   }
 
   int _check(int i, int j, int k) {
-    if (_boardState[i] != '' && _boardState[i] == _boardState[j] && _boardState[j] == _boardState[k]) {
+    if (_boardState[i] != '' &&
+        _boardState[i] == _boardState[j] &&
+        _boardState[j] == _boardState[k]) {
       _winnerLine.addAll(<int>[i, j, k]);
 
       if (_boardState[i] == 'X') {
@@ -160,12 +162,15 @@ class _GamePageState extends State<GamePage> {
   void _resetGame() {
     setState(() {
       _boardState = List<String>.filled(9, '');
+
       /// alternate who starts the game
       /// if last game was not finished, the same player starts
-      _isPlayer1Turn = _isPlayer1First = _gameResult == '' ? _isPlayer1First : !_isPlayer1First;
+      _isPlayer1Turn = _isPlayer1First =
+          _gameResult == '' ? _isPlayer1First : !_isPlayer1First;
       _gameResult = '';
       _winnerLine = <int>[];
-      _gameStartMessage = _isPlayer1Turn ? "X-PLAYER'S TURN" : "0-PLAYER'S TURN";
+      _gameStartMessage =
+          _isPlayer1Turn ? "X-PLAYER'S TURN" : "0-PLAYER'S TURN";
     });
   }
 
@@ -175,7 +180,8 @@ class _GamePageState extends State<GamePage> {
       backgroundColor: const Color(0xff24135d),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(top: 35.0, bottom: 35.0, left: 50.0, right: 50.0),
+          padding: const EdgeInsets.only(
+              top: 35.0, bottom: 35.0, left: 50.0, right: 50.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -202,9 +208,13 @@ class _GamePageState extends State<GamePage> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: 9,
                     itemBuilder: (BuildContext context, int i) {
+                      final int player = _boardState[i] == 'X' ? 0 : 1;
+                      final bool isEmpty = _boardState[i] == '';
                       return Container(
                         decoration: BoxDecoration(
-                          color: _winnerLine.contains(i) ? const Color(0xff27d075) : const Color(0xff332267),
+                          color: _winnerLine.contains(i)
+                              ? const Color(0xff27d075)
+                              : const Color(0xff332267),
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         child: GestureDetector(
@@ -216,25 +226,25 @@ class _GamePageState extends State<GamePage> {
                           child: AnimatedOpacity(
                             duration: const Duration(milliseconds: 700),
                             curve: Curves.ease,
-                            opacity: _boardState[i] == '' ? 0.0 : 1.0,
-                            child: _boardState[i] == ''
+                            opacity: isEmpty ? 0.0 : 1.0,
+                            child: isEmpty
                                 ? const Text('')
-                                : (_boardState[i] == 'X'
-                                    ? Icon(
-                                        _players[0].playerSymbol,
-                                        size: 60.0,
-                                        color: _winnerLine.contains(i) ? Colors.white : _players[0].color,
-                                      )
-                                    : Icon(
-                                        _players[1].playerSymbol,
-                                        size: 60.0,
-                                        color: _winnerLine.contains(i) ? Colors.white : _players[1].color,
-                                      )),
+                                : LayoutBuilder(builder: (BuildContext context,
+                                    BoxConstraints constraint) {
+                                    return Icon(
+                                      _players[player].playerSymbol,
+                                      size: constraint.biggest.height,
+                                      color: _winnerLine.contains(i)
+                                          ? Colors.white
+                                          : _players[player].color,
+                                    );
+                                  }),
                           ),
                         ),
                       );
                     },
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       childAspectRatio: 1.0,
                       crossAxisSpacing: 10.0,
@@ -284,7 +294,7 @@ class _GamePageState extends State<GamePage> {
                           ),
                         ),
                         subtitle: Text(
-                          '${_players[j].score} pct',
+                          '${_players[j].score} pts',
                           style: const TextStyle(color: Color(0xff27d075)),
                         ),
                         leading: Icon(
@@ -292,7 +302,8 @@ class _GamePageState extends State<GamePage> {
                           size: 40.0,
                           color: _players[j].color,
                         ),
-                        trailing: _players[j].score > (_players[0].score + _players[1].score) / 2
+                        trailing: _players[j].score >
+                                (_players[0].score + _players[1].score) / 2
                             ? const Icon(
                                 Icons.emoji_events,
                                 size: 30.0,
