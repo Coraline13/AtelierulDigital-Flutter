@@ -71,9 +71,7 @@ class _GamePageState extends State<GamePage> {
   }
 
   int _check(int i, int j, int k) {
-    if (_boardState[i] != '' &&
-        _boardState[i] == _boardState[j] &&
-        _boardState[j] == _boardState[k]) {
+    if (_boardState[i] != '' && _boardState[i] == _boardState[j] && _boardState[j] == _boardState[k]) {
       _winnerLine.addAll(<int>[i, j, k]);
 
       if (_boardState[i] == 'X') {
@@ -165,12 +163,10 @@ class _GamePageState extends State<GamePage> {
 
       /// alternate who starts the game
       /// if last game was not finished, the same player starts
-      _isPlayer1Turn = _isPlayer1First =
-          _gameResult == '' ? _isPlayer1First : !_isPlayer1First;
+      _isPlayer1Turn = _isPlayer1First = _gameResult == '' ? _isPlayer1First : !_isPlayer1First;
       _gameResult = '';
       _winnerLine = <int>[];
-      _gameStartMessage =
-          _isPlayer1Turn ? "X-PLAYER'S TURN" : "0-PLAYER'S TURN";
+      _gameStartMessage = _isPlayer1Turn ? "X-PLAYER'S TURN" : "0-PLAYER'S TURN";
     });
   }
 
@@ -180,8 +176,7 @@ class _GamePageState extends State<GamePage> {
       backgroundColor: const Color(0xff24135d),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(
-              top: 35.0, bottom: 35.0, left: 50.0, right: 50.0),
+          padding: const EdgeInsets.only(top: 35.0, bottom: 35.0, left: 50.0, right: 50.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -212,9 +207,7 @@ class _GamePageState extends State<GamePage> {
                       final bool isEmpty = _boardState[i] == '';
                       return Container(
                         decoration: BoxDecoration(
-                          color: _winnerLine.contains(i)
-                              ? const Color(0xff27d075)
-                              : const Color(0xff332267),
+                          color: _winnerLine.contains(i) ? const Color(0xff27d075) : const Color(0xff332267),
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         child: GestureDetector(
@@ -229,22 +222,16 @@ class _GamePageState extends State<GamePage> {
                             opacity: isEmpty ? 0.0 : 1.0,
                             child: isEmpty
                                 ? const Text('')
-                                : LayoutBuilder(builder: (BuildContext context,
-                                    BoxConstraints constraint) {
-                                    return Icon(
-                                      _players[player].playerSymbol,
-                                      size: constraint.biggest.height,
-                                      color: _winnerLine.contains(i)
-                                          ? Colors.white
-                                          : _players[player].color,
-                                    );
-                                  }),
+                                : Icon(
+                                    _players[player].playerSymbol,
+                                    size: 60.0,
+                                    color: _winnerLine.contains(i) ? Colors.white : _players[player].color,
+                                  ),
                           ),
                         ),
                       );
                     },
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       childAspectRatio: 1.0,
                       crossAxisSpacing: 10.0,
@@ -302,8 +289,7 @@ class _GamePageState extends State<GamePage> {
                           size: 40.0,
                           color: _players[j].color,
                         ),
-                        trailing: _players[j].score >
-                                (_players[0].score + _players[1].score) / 2
+                        trailing: _players[j].score > (_players[0].score + _players[1].score) / 2
                             ? const Icon(
                                 Icons.emoji_events,
                                 size: 30.0,
