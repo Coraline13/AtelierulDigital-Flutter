@@ -52,14 +52,14 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _showMyDialog() async {
     return showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(_inputNumber.toString()),
-            content: Text(_beautifulMessage()),
-          );
-        },
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(_inputNumber.toString()),
+          content: Text(_beautifulMessage()),
+        );
+      },
     );
   }
 
@@ -71,35 +71,35 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Number shapes'),
       ),
       body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: <Widget>[
-              const Text(
-                'Please input a number to see if it is perfect square or perfect cube.',
-                style: TextStyle(
-                  fontSize: 18,
-                ),
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: <Widget>[
+            const Text(
+              'Please input a number to see if it is perfect square or perfect cube.',
+              style: TextStyle(
+                fontSize: 18,
               ),
-              TextField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  errorText: _error,
-                ),
-                onChanged: (String value) {
-                  setState(() {
-                    if (int.tryParse(value) == null) {
-                      setState(() {
-                        _error = 'Enter a number';
-                      });
-                    } else {
-                      _error = null;
-                      _inputNumber = int.parse(value);
-                    }
-                  });
-                },
+            ),
+            TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                errorText: _error,
               ),
-            ],
-          ),
+              onChanged: (String value) {
+                setState(() {
+                  if (int.tryParse(value) == null) {
+                    setState(() {
+                      _error = 'Enter a number';
+                    });
+                  } else {
+                    _error = null;
+                    _inputNumber = int.parse(value);
+                  }
+                });
+              },
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
