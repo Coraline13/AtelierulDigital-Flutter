@@ -2,7 +2,4 @@
 
 ## Tic Tac Toe
 
-![Tic Tac Toe](../../../docs/tic_tac_toe.gif)
-
-[comment]: <> (## Basic Phrases)
-
+![Tic Tac Toe](../../../docs/03_tic_tac_toe.gif)

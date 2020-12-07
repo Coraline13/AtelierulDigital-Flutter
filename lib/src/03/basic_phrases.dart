@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
             child: Center(
               child: GestureDetector(
                 onTap: () {
-                  print('muie');
+                  print('AICI');
                   final Audio audio = Audio('audio/voiture.mp3');
                   print('audio path ${audio.path}');
                   print('audio package ${audio.package}');
