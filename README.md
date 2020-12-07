@@ -1,16 +1,16 @@
 # Atelierul Digital - Flutter
 
-A new Flutter project.
+An awesome Flutter course.
 
-## Getting Started
+## Homework
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* [Week 1](lib/src/01)
+    - [x] [Currency convertor](lib/src/01/currency_convertor.dart)
+    
+* [Week 2](lib/src/02)
+    - [x] [Number shapes](lib/src/02/number_shapes.dart)
+    - [x] [Guess my number](lib/src/02/guess_my_number.dart)
+    
+* [Week 3](lib/src/03)
+    - [x] [Tic tac toe](lib/src/03/tic_tac_toe.dart)
+    - [ ] [Basic phrases](lib/src/03/basic_phrases.dart)
