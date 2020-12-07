@@ -16,6 +16,13 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class GamePage extends StatefulWidget {
+  const GamePage({Key key}) : super(key: key);
+
+  @override
+  _GamePageState createState() => _GamePageState();
+}
+
 class Player {
   Player({
     @required this.name,
@@ -32,13 +39,6 @@ class Player {
   void awardPoints(double points) {
     score += points;
   }
-}
-
-class GamePage extends StatefulWidget {
-  const GamePage({Key key}) : super(key: key);
-
-  @override
-  _GamePageState createState() => _GamePageState();
 }
 
 class _GamePageState extends State<GamePage> {
