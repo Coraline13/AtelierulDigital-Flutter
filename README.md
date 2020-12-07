@@ -13,4 +13,4 @@ An awesome Flutter course.
     
 * [Week 3](lib/src/03)
     - [x] [Tic tac toe](lib/src/03/tic_tac_toe.dart)
-    - [ ] [Basic phrases](lib/src/03/basic_phrases.dart)
+    - [x] [Basic phrases](lib/src/03/basic_phrases.dart)
