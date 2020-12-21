@@ -13,11 +13,8 @@ class YtsApi {
 
   String getUrl(String genre) {
     const String baseUrl = 'https://yts.mx/api/v2/list_movies.json?limit=48';
-    if (genre != null) {
-      return '$baseUrl&genre=$genre';
-    } else {
-      return baseUrl;
-    }
+
+    return genre == null ? baseUrl : '$baseUrl&genre=$genre';
   }
 
   Future<List<Movie>> getMovies([String genre]) async {
