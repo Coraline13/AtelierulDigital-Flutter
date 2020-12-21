@@ -99,13 +99,13 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _loading = true;
     });
-    print('muie');
+
     if (_genre == 'ALL') {
       response = await get('https://yts.mx/api/v2/list_movies.json');
     } else {
       response = await get('https://yts.mx/api/v2/list_movies.json?genre=$_genre');
     }
-    print('da');
+
     final Map<String, dynamic> map = jsonDecode(response.body);
     final Map<String, dynamic> data = map['data'];
     final List<dynamic> moviesData = data['movies'];
@@ -113,7 +113,6 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _movies = moviesData.map((dynamic item) => Movie.fromJson(item)).toList();
       _loading = false;
-      print('ceva');
     });
   }
 

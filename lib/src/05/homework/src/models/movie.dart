@@ -8,7 +8,6 @@ import 'package:built_value/serializer.dart';
 part 'movie.g.dart';
 
 abstract class Movie implements Built<Movie, MovieBuilder> {
-  // TODO(Coraline): understand functionality
   factory Movie([void Function(MovieBuilder) updates]) = _$Movie;
 
   factory Movie.fromJson(dynamic json) {
