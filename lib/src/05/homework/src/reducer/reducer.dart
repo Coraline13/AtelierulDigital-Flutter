@@ -7,6 +7,8 @@ AppState reducer(AppState state, dynamic action) {
 
   if (action is GetMovies) {
     builder.isLoading = true;
+    print('action.genre = ${action.genre}');
+    builder.genre = action.genre;
   } else if (action is GetMoviesSuccessful) {
     builder.movies.clear();
     builder.movies.addAll(action.movies);

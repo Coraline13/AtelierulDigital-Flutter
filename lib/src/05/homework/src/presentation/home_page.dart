@@ -49,13 +49,13 @@ class HomePage extends StatelessWidget {
     return items;
   }
 
-  Future<void> _showMovieDetails(BuildContext context, String title, String genres) async {
+  Future<void> _showMovieDetails(BuildContext context, Movie movie) async {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(title),
-          content: Text(genres),
+          title: Text('${movie.title} (${movie.year})'),
+          content: Text('Genres: ${movie.genres.join(', ')}'),
         );
       },
     );
@@ -109,7 +109,7 @@ class HomePage extends StatelessWidget {
                                 final Movie movie = movies[index];
                                 return GestureDetector(
                                   onTap: () {
-                                    _showMovieDetails(context, movie.title, movie.genres.join(', '));
+                                    _showMovieDetails(context, movie);
                                   },
                                   child: GridTile(
                                     child: Image.network(movie.mediumCoverImage),

@@ -19,5 +19,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   BuiltList<Movie> get movies;
 
+  @nullable
+  String get genre;
+
   bool get isLoading;
 }

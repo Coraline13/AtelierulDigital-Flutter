@@ -10,12 +10,14 @@ class _$AppState extends AppState {
   @override
   final BuiltList<Movie> movies;
   @override
+  final String genre;
+  @override
   final bool isLoading;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
 
-  _$AppState._({this.movies, this.isLoading}) : super._() {
+  _$AppState._({this.movies, this.genre, this.isLoading}) : super._() {
     if (movies == null) {
       throw new BuiltValueNullFieldError('AppState', 'movies');
     }
@@ -36,18 +38,21 @@ class _$AppState extends AppState {
     if (identical(other, this)) return true;
     return other is AppState &&
         movies == other.movies &&
+        genre == other.genre &&
         isLoading == other.isLoading;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, movies.hashCode), isLoading.hashCode));
+    return $jf(
+        $jc($jc($jc(0, movies.hashCode), genre.hashCode), isLoading.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('AppState')
           ..add('movies', movies)
+          ..add('genre', genre)
           ..add('isLoading', isLoading))
         .toString();
   }
@@ -60,6 +65,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   ListBuilder<Movie> get movies => _$this._movies ??= new ListBuilder<Movie>();
   set movies(ListBuilder<Movie> movies) => _$this._movies = movies;
 
+  String _genre;
+  String get genre => _$this._genre;
+  set genre(String genre) => _$this._genre = genre;
+
   bool _isLoading;
   bool get isLoading => _$this._isLoading;
   set isLoading(bool isLoading) => _$this._isLoading = isLoading;
@@ -69,6 +78,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   AppStateBuilder get _$this {
     if (_$v != null) {
       _movies = _$v.movies?.toBuilder();
+      _genre = _$v.genre;
       _isLoading = _$v.isLoading;
       _$v = null;
     }
@@ -92,8 +102,9 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   _$AppState build() {
     _$AppState _$result;
     try {
-      _$result =
-          _$v ?? new _$AppState._(movies: movies.build(), isLoading: isLoading);
+      _$result = _$v ??
+          new _$AppState._(
+              movies: movies.build(), genre: genre, isLoading: isLoading);
     } catch (_) {
       String _$failedField;
       try {
