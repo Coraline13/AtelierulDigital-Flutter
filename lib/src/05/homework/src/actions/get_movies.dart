@@ -1,11 +1,9 @@
 import 'package:atelieruldigital_flutter/src/05/homework/src/models/movie.dart';
 
 class GetMovies {
-  const GetMovies({this.genre, this.page});
+  const GetMovies({this.genre});
 
   final String genre;
-
-  final int page;
 }
 
 class GetMoviesSuccessful {

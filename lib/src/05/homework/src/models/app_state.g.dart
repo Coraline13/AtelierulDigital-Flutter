@@ -12,14 +12,20 @@ class _$AppState extends AppState {
   @override
   final String genre;
   @override
+  final int page;
+  @override
   final bool isLoading;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
 
-  _$AppState._({this.movies, this.genre, this.isLoading}) : super._() {
+  _$AppState._({this.movies, this.genre, this.page, this.isLoading})
+      : super._() {
     if (movies == null) {
       throw new BuiltValueNullFieldError('AppState', 'movies');
+    }
+    if (page == null) {
+      throw new BuiltValueNullFieldError('AppState', 'page');
     }
     if (isLoading == null) {
       throw new BuiltValueNullFieldError('AppState', 'isLoading');
@@ -39,13 +45,15 @@ class _$AppState extends AppState {
     return other is AppState &&
         movies == other.movies &&
         genre == other.genre &&
+        page == other.page &&
         isLoading == other.isLoading;
   }
 
   @override
   int get hashCode {
-    return $jf(
-        $jc($jc($jc(0, movies.hashCode), genre.hashCode), isLoading.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, movies.hashCode), genre.hashCode), page.hashCode),
+        isLoading.hashCode));
   }
 
   @override
@@ -53,6 +61,7 @@ class _$AppState extends AppState {
     return (newBuiltValueToStringHelper('AppState')
           ..add('movies', movies)
           ..add('genre', genre)
+          ..add('page', page)
           ..add('isLoading', isLoading))
         .toString();
   }
@@ -69,6 +78,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   String get genre => _$this._genre;
   set genre(String genre) => _$this._genre = genre;
 
+  int _page;
+  int get page => _$this._page;
+  set page(int page) => _$this._page = page;
+
   bool _isLoading;
   bool get isLoading => _$this._isLoading;
   set isLoading(bool isLoading) => _$this._isLoading = isLoading;
@@ -79,6 +92,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     if (_$v != null) {
       _movies = _$v.movies?.toBuilder();
       _genre = _$v.genre;
+      _page = _$v.page;
       _isLoading = _$v.isLoading;
       _$v = null;
     }
@@ -104,7 +118,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     try {
       _$result = _$v ??
           new _$AppState._(
-              movies: movies.build(), genre: genre, isLoading: isLoading);
+              movies: movies.build(),
+              genre: genre,
+              page: page,
+              isLoading: isLoading);
     } catch (_) {
       String _$failedField;
       try {

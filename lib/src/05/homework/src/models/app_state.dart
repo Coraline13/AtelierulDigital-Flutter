@@ -11,6 +11,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   factory AppState.initialState() {
     final AppStateBuilder builder = AppStateBuilder();
+    builder.page = 1;
     builder.isLoading = true;
     return builder.build();
   }
@@ -21,6 +22,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @nullable
   String get genre;
+
+  int get page;
 
   bool get isLoading;
 }
