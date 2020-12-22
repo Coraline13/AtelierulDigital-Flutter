@@ -20,7 +20,7 @@ void main() {
     middleware: middleware.middleware,
   );
 
-  store.dispatch(const GetMovies());
+  store.dispatch(const GetMovies(genre: 'ALL'));
 
   runApp(MyApp(store: store));
 }

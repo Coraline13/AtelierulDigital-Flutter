@@ -11,14 +11,14 @@ class YtsApi {
 
   final Client _client;
 
-  String getUrl(String genre) {
+  String getUrl(String genre, int page) {
     const String baseUrl = 'https://yts.mx/api/v2/list_movies.json?limit=48';
 
-    return genre == null ? baseUrl : '$baseUrl&genre=$genre';
+    return (genre == null || genre == 'ALL') ? '$baseUrl&page=$page' : '$baseUrl&page=$page&genre=$genre';
   }
 
-  Future<List<Movie>> getMovies([String genre]) async {
-    final String url = getUrl(genre);
+  Future<List<Movie>> getMovies([String genre, int page]) async {
+    final String url = getUrl(genre, page ?? 1);
     final Response response = await _client.get(url);
     final String body = response.body;
     final List<dynamic> list = jsonDecode(body)['data']['movies'];

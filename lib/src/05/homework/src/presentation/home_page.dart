@@ -61,6 +61,11 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  // Future<void> _loadMore(BuildContext context) async {
+  //   final Store<AppState> store = StoreProvider.of<AppState>(context);
+  //   final state = store.state.shutterStockState;
+  // }
+
   @override
   Widget build(BuildContext context) {
     return IsLoadingContainer(
@@ -76,53 +81,46 @@ class HomePage extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               }
-              return StoreConnector<AppState, void Function(String)>(
-                converter: (Store<AppState> store) {
-                  return (String genre) {
-                    store.dispatch(GetMovies(genre: genre));
-                  };
-                },
-                builder: (BuildContext context, void Function(String) genreFilterCallback) {
-                  return Column(
-                    children: <Widget>[
-                      DropdownButton<String>(
-                        value: 'ALL',
-                        icon: const Icon(Icons.filter_list),
-                        items: _buildDropdownMenuItems(),
-                        onChanged: genreFilterCallback,
-                      ),
-                      Expanded(
-                        child: MoviesContainer(
-                          builder: (BuildContext context, BuiltList<Movie> movies) {
-                            return GridView.builder(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 16.0,
-                                horizontal: 0.0,
-                              ),
-                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                mainAxisSpacing: 16.0,
-                                crossAxisSpacing: 0.0,
-                                crossAxisCount: 3,
-                              ),
-                              itemCount: movies.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                final Movie movie = movies[index];
-                                return GestureDetector(
-                                  onTap: () {
-                                    _showMovieDetails(context, movie);
-                                  },
-                                  child: GridTile(
-                                    child: Image.network(movie.mediumCoverImage),
-                                  ),
-                                );
+              return Column(
+                children: <Widget>[
+                  DropdownButton<String>(
+                    value: StoreProvider.of<AppState>(context).state.genre,
+                    icon: const Icon(Icons.filter_list),
+                    items: _buildDropdownMenuItems(),
+                    onChanged: (String genre) {
+                      StoreProvider.of<AppState>(context).dispatch(GetMovies(genre: genre));
+                    },
+                  ),
+                  Expanded(
+                    child: MoviesContainer(
+                      builder: (BuildContext context, BuiltList<Movie> movies) {
+                        return GridView.builder(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 16.0,
+                            horizontal: 0.0,
+                          ),
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisSpacing: 16.0,
+                            crossAxisSpacing: 0.0,
+                            crossAxisCount: 3,
+                          ),
+                          itemCount: movies.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final Movie movie = movies[index];
+                            return GestureDetector(
+                              onTap: () {
+                                _showMovieDetails(context, movie);
                               },
+                              child: GridTile(
+                                child: Image.network(movie.mediumCoverImage),
+                              ),
                             );
                           },
-                        ),
-                      ),
-                    ],
-                  );
-                },
+                        );
+                      },
+                    ),
+                  ),
+                ],
               );
             },
           ),

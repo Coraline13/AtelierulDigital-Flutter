@@ -14,6 +14,7 @@ AppState reducer(AppState state, dynamic action) {
     builder.movies.addAll(action.movies);
     builder.isLoading = false;
   } else if (action is GetMoviesError) {
+    print('action.error = ${action.error}');
     builder.isLoading = false;
   }
 
