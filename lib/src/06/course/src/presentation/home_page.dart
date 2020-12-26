@@ -19,7 +19,6 @@ import 'package:atelieruldigital_flutter/src/06/course/src/containers/page_conta
 import 'package:atelieruldigital_flutter/src/06/course/src/containers/quality_container.dart';
 import 'package:atelieruldigital_flutter/src/06/course/src/models/app_state.dart';
 import 'package:atelieruldigital_flutter/src/06/course/src/models/movie.dart';
-import 'package:atelieruldigital_flutter/src/06/course/src/presentation/movie_detail.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
