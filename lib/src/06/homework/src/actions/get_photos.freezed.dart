@@ -19,9 +19,9 @@ class _$GetPhotosTearOff {
   }
 
 // ignore: unused_element
-  GetPhotosSuccessful successful(List<Photo> movies) {
+  GetPhotosSuccessful successful(List<Photo> photos) {
     return GetPhotosSuccessful(
-      movies,
+      photos,
     );
   }
 
@@ -42,22 +42,25 @@ mixin _$GetPhotos {
   @optionalTypeArgs
   Result when<Result extends Object>(
     Result $default(), {
-    @required Result successful(List<Photo> movies),
+    @required Result successful(List<Photo> photos),
     @required Result error(dynamic error),
   });
+
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>(
     Result $default(), {
-    Result successful(List<Photo> movies),
+    Result successful(List<Photo> photos),
     Result error(dynamic error),
     @required Result orElse(),
   });
+
   @optionalTypeArgs
   Result map<Result extends Object>(
     Result $default(GetPhotosStart value), {
     @required Result successful(GetPhotosSuccessful value),
     @required Result error(GetPhotosError value),
   });
+
   @optionalTypeArgs
   Result maybeMap<Result extends Object>(
     Result $default(GetPhotosStart value), {
@@ -69,8 +72,7 @@ mixin _$GetPhotos {
 
 /// @nodoc
 abstract class $GetPhotosCopyWith<$Res> {
-  factory $GetPhotosCopyWith(GetPhotos value, $Res Function(GetPhotos) then) =
-      _$GetPhotosCopyWithImpl<$Res>;
+  factory $GetPhotosCopyWith(GetPhotos value, $Res Function(GetPhotos) then) = _$GetPhotosCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -78,22 +80,21 @@ class _$GetPhotosCopyWithImpl<$Res> implements $GetPhotosCopyWith<$Res> {
   _$GetPhotosCopyWithImpl(this._value, this._then);
 
   final GetPhotos _value;
+
   // ignore: unused_field
   final $Res Function(GetPhotos) _then;
 }
 
 /// @nodoc
 abstract class $GetPhotosStartCopyWith<$Res> {
-  factory $GetPhotosStartCopyWith(
-          GetPhotosStart value, $Res Function(GetPhotosStart) then) =
+  factory $GetPhotosStartCopyWith(GetPhotosStart value, $Res Function(GetPhotosStart) then) =
       _$GetPhotosStartCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class _$GetPhotosStartCopyWithImpl<$Res> extends _$GetPhotosCopyWithImpl<$Res>
     implements $GetPhotosStartCopyWith<$Res> {
-  _$GetPhotosStartCopyWithImpl(
-      GetPhotosStart _value, $Res Function(GetPhotosStart) _then)
+  _$GetPhotosStartCopyWithImpl(GetPhotosStart _value, $Res Function(GetPhotosStart) _then)
       : super(_value, (v) => _then(v as GetPhotosStart));
 
   @override
@@ -121,7 +122,7 @@ class _$GetPhotosStart implements GetPhotosStart {
   @optionalTypeArgs
   Result when<Result extends Object>(
     Result $default(), {
-    @required Result successful(List<Photo> movies),
+    @required Result successful(List<Photo> photos),
     @required Result error(dynamic error),
   }) {
     assert($default != null);
@@ -134,7 +135,7 @@ class _$GetPhotosStart implements GetPhotosStart {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>(
     Result $default(), {
-    Result successful(List<Photo> movies),
+    Result successful(List<Photo> photos),
     Result error(dynamic error),
     @required Result orElse(),
   }) {
@@ -180,18 +181,16 @@ abstract class GetPhotosStart implements GetPhotos {
 
 /// @nodoc
 abstract class $GetPhotosSuccessfulCopyWith<$Res> {
-  factory $GetPhotosSuccessfulCopyWith(
-          GetPhotosSuccessful value, $Res Function(GetPhotosSuccessful) then) =
+  factory $GetPhotosSuccessfulCopyWith(GetPhotosSuccessful value, $Res Function(GetPhotosSuccessful) then) =
       _$GetPhotosSuccessfulCopyWithImpl<$Res>;
-  $Res call({List<Photo> movies});
+
+  $Res call({List<Photo> photos});
 }
 
 /// @nodoc
-class _$GetPhotosSuccessfulCopyWithImpl<$Res>
-    extends _$GetPhotosCopyWithImpl<$Res>
+class _$GetPhotosSuccessfulCopyWithImpl<$Res> extends _$GetPhotosCopyWithImpl<$Res>
     implements $GetPhotosSuccessfulCopyWith<$Res> {
-  _$GetPhotosSuccessfulCopyWithImpl(
-      GetPhotosSuccessful _value, $Res Function(GetPhotosSuccessful) _then)
+  _$GetPhotosSuccessfulCopyWithImpl(GetPhotosSuccessful _value, $Res Function(GetPhotosSuccessful) _then)
       : super(_value, (v) => _then(v as GetPhotosSuccessful));
 
   @override
@@ -199,37 +198,35 @@ class _$GetPhotosSuccessfulCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object movies = freezed,
+    Object photos = freezed,
   }) {
     return _then(GetPhotosSuccessful(
-      movies == freezed ? _value.movies : movies as List<Photo>,
+      photos == freezed ? _value.photos : photos as List<Photo>,
     ));
   }
 }
 
 /// @nodoc
 class _$GetPhotosSuccessful implements GetPhotosSuccessful {
-  const _$GetPhotosSuccessful(this.movies) : assert(movies != null);
+  const _$GetPhotosSuccessful(this.photos) : assert(photos != null);
 
   @override
-  final List<Photo> movies;
+  final List<Photo> photos;
 
   @override
   String toString() {
-    return 'GetPhotos.successful(movies: $movies)';
+    return 'GetPhotos.successful(photos: $photos)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is GetPhotosSuccessful &&
-            (identical(other.movies, movies) ||
-                const DeepCollectionEquality().equals(other.movies, movies)));
+            (identical(other.photos, photos) || const DeepCollectionEquality().equals(other.photos, photos)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(movies);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(photos);
 
   @override
   $GetPhotosSuccessfulCopyWith<GetPhotosSuccessful> get copyWith =>
@@ -239,26 +236,26 @@ class _$GetPhotosSuccessful implements GetPhotosSuccessful {
   @optionalTypeArgs
   Result when<Result extends Object>(
     Result $default(), {
-    @required Result successful(List<Photo> movies),
+    @required Result successful(List<Photo> photos),
     @required Result error(dynamic error),
   }) {
     assert($default != null);
     assert(successful != null);
     assert(error != null);
-    return successful(movies);
+    return successful(photos);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>(
     Result $default(), {
-    Result successful(List<Photo> movies),
+    Result successful(List<Photo> photos),
     Result error(dynamic error),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (successful != null) {
-      return successful(movies);
+      return successful(photos);
     }
     return orElse();
   }
@@ -293,25 +290,25 @@ class _$GetPhotosSuccessful implements GetPhotosSuccessful {
 }
 
 abstract class GetPhotosSuccessful implements GetPhotos {
-  const factory GetPhotosSuccessful(List<Photo> movies) = _$GetPhotosSuccessful;
+  const factory GetPhotosSuccessful(List<Photo> photos) = _$GetPhotosSuccessful;
 
-  List<Photo> get movies;
+  List<Photo> get photos;
+
   $GetPhotosSuccessfulCopyWith<GetPhotosSuccessful> get copyWith;
 }
 
 /// @nodoc
 abstract class $GetPhotosErrorCopyWith<$Res> {
-  factory $GetPhotosErrorCopyWith(
-          GetPhotosError value, $Res Function(GetPhotosError) then) =
+  factory $GetPhotosErrorCopyWith(GetPhotosError value, $Res Function(GetPhotosError) then) =
       _$GetPhotosErrorCopyWithImpl<$Res>;
+
   $Res call({dynamic error});
 }
 
 /// @nodoc
 class _$GetPhotosErrorCopyWithImpl<$Res> extends _$GetPhotosCopyWithImpl<$Res>
     implements $GetPhotosErrorCopyWith<$Res> {
-  _$GetPhotosErrorCopyWithImpl(
-      GetPhotosError _value, $Res Function(GetPhotosError) _then)
+  _$GetPhotosErrorCopyWithImpl(GetPhotosError _value, $Res Function(GetPhotosError) _then)
       : super(_value, (v) => _then(v as GetPhotosError));
 
   @override
@@ -343,13 +340,11 @@ class _$GetPhotosError implements GetPhotosError {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is GetPhotosError &&
-            (identical(other.error, error) ||
-                const DeepCollectionEquality().equals(other.error, error)));
+            (identical(other.error, error) || const DeepCollectionEquality().equals(other.error, error)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(error);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(error);
 
   @override
   $GetPhotosErrorCopyWith<GetPhotosError> get copyWith =>
@@ -359,7 +354,7 @@ class _$GetPhotosError implements GetPhotosError {
   @optionalTypeArgs
   Result when<Result extends Object>(
     Result $default(), {
-    @required Result successful(List<Photo> movies),
+    @required Result successful(List<Photo> photos),
     @required Result error(dynamic error),
   }) {
     assert($default != null);
@@ -372,7 +367,7 @@ class _$GetPhotosError implements GetPhotosError {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>(
     Result $default(), {
-    Result successful(List<Photo> movies),
+    Result successful(List<Photo> photos),
     Result error(dynamic error),
     @required Result orElse(),
   }) {
@@ -416,5 +411,6 @@ abstract class GetPhotosError implements GetPhotos {
   const factory GetPhotosError(dynamic error) = _$GetPhotosError;
 
   dynamic get error;
+
   $GetPhotosErrorCopyWith<GetPhotosError> get copyWith;
 }

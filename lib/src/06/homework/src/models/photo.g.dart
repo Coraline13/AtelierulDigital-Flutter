@@ -15,8 +15,7 @@ class _$PhotoSerializer implements StructuredSerializer<Photo> {
   final String wireName = 'Photo';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, Photo object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object> serialize(Serializers serializers, Photo object, {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(int)),
@@ -25,15 +24,12 @@ class _$PhotoSerializer implements StructuredSerializer<Photo> {
       'height',
       serializers.serialize(object.height, specifiedType: const FullType(int)),
       'description',
-      serializers.serialize(object.description,
-          specifiedType: const FullType(String)),
+      serializers.serialize(object.description, specifiedType: const FullType(String)),
       'alt_description',
-      serializers.serialize(object.altDescription,
-          specifiedType: const FullType(String)),
+      serializers.serialize(object.altDescription, specifiedType: const FullType(String)),
       'urls',
       serializers.serialize(object.urls,
-          specifiedType: const FullType(
-              Map, const [const FullType(String), const FullType(String)])),
+          specifiedType: const FullType(Map, const [const FullType(String), const FullType(String)])),
     ];
 
     return result;
@@ -51,31 +47,24 @@ class _$PhotoSerializer implements StructuredSerializer<Photo> {
       final dynamic value = iterator.current;
       switch (key) {
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+          result.id = serializers.deserialize(value, specifiedType: const FullType(int)) as int;
           break;
         case 'width':
-          result.width = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+          result.width = serializers.deserialize(value, specifiedType: const FullType(int)) as int;
           break;
         case 'height':
-          result.height = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+          result.height = serializers.deserialize(value, specifiedType: const FullType(int)) as int;
           break;
         case 'description':
-          result.description = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.description = serializers.deserialize(value, specifiedType: const FullType(String)) as String;
           break;
         case 'alt_description':
-          result.altDescription = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.altDescription = serializers.deserialize(value, specifiedType: const FullType(String)) as String;
           break;
         case 'urls':
           result.urls = serializers.deserialize(value,
-              specifiedType: const FullType(Map, const [
-                const FullType(String),
-                const FullType(String)
-              ])) as Map<String, String>;
+                  specifiedType: const FullType(Map, const [const FullType(String), const FullType(String)]))
+              as Map<String, String>;
           break;
       }
     }
@@ -98,17 +87,9 @@ class _$Photo extends Photo {
   @override
   final Map<String, String> urls;
 
-  factory _$Photo([void Function(PhotoBuilder) updates]) =>
-      (new PhotoBuilder()..update(updates)).build();
+  factory _$Photo([void Function(PhotoBuilder) updates]) => (new PhotoBuilder()..update(updates)).build();
 
-  _$Photo._(
-      {this.id,
-      this.width,
-      this.height,
-      this.description,
-      this.altDescription,
-      this.urls})
-      : super._() {
+  _$Photo._({this.id, this.width, this.height, this.description, this.altDescription, this.urls}) : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('Photo', 'id');
     }
@@ -130,8 +111,7 @@ class _$Photo extends Photo {
   }
 
   @override
-  Photo rebuild(void Function(PhotoBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+  Photo rebuild(void Function(PhotoBuilder) updates) => (toBuilder()..update(updates)).build();
 
   @override
   PhotoBuilder toBuilder() => new PhotoBuilder()..replace(this);
@@ -151,9 +131,7 @@ class _$Photo extends Photo {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc(
-            $jc($jc($jc($jc(0, id.hashCode), width.hashCode), height.hashCode),
-                description.hashCode),
+        $jc($jc($jc($jc($jc(0, id.hashCode), width.hashCode), height.hashCode), description.hashCode),
             altDescription.hashCode),
         urls.hashCode));
   }
@@ -175,28 +153,39 @@ class PhotoBuilder implements Builder<Photo, PhotoBuilder> {
   _$Photo _$v;
 
   int _id;
+
   int get id => _$this._id;
+
   set id(int id) => _$this._id = id;
 
   int _width;
+
   int get width => _$this._width;
+
   set width(int width) => _$this._width = width;
 
   int _height;
+
   int get height => _$this._height;
+
   set height(int height) => _$this._height = height;
 
   String _description;
+
   String get description => _$this._description;
+
   set description(String description) => _$this._description = description;
 
   String _altDescription;
+
   String get altDescription => _$this._altDescription;
-  set altDescription(String altDescription) =>
-      _$this._altDescription = altDescription;
+
+  set altDescription(String altDescription) => _$this._altDescription = altDescription;
 
   Map<String, String> _urls;
+
   Map<String, String> get urls => _$this._urls;
+
   set urls(Map<String, String> urls) => _$this._urls = urls;
 
   PhotoBuilder();
@@ -231,12 +220,7 @@ class PhotoBuilder implements Builder<Photo, PhotoBuilder> {
   _$Photo build() {
     final _$result = _$v ??
         new _$Photo._(
-            id: id,
-            width: width,
-            height: height,
-            description: description,
-            altDescription: altDescription,
-            urls: urls);
+            id: id, width: width, height: height, description: description, altDescription: altDescription, urls: urls);
     replace(_$result);
     return _$result;
   }

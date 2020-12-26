@@ -13,7 +13,6 @@ class UnsplashApi {
 
   Future<List<Photo>> getPhotos(
     int page,
-    Map<String, String> urls,
   ) async {
     final Uri url = Uri(
       scheme: 'https',
