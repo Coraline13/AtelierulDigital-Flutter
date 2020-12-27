@@ -21,7 +21,7 @@ class UnsplashApi {
       queryParameters: <String, String>{
         'client_id': 'lIjDLBNmGFVSi-sd2_G9k2yB21sRIeQ7r5oPzazgApY',
         'page': '$page',
-        'per_page': '10',
+        'per_page': '6',
         'order_by': 'latest',
       },
     );
