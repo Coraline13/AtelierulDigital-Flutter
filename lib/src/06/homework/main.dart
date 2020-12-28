@@ -1,4 +1,5 @@
 import 'package:atelieruldigital_flutter/src/06/homework/src/middleware/app_middleware.dart';
+import 'package:atelieruldigital_flutter/src/06/homework/src/presentation/photo_detail.dart';
 import 'package:atelieruldigital_flutter/src/06/homework/src/presentation/home_page.dart';
 import 'package:atelieruldigital_flutter/src/06/homework/src/actions/get_photos.dart';
 import 'package:atelieruldigital_flutter/src/06/homework/src/data/unsplash_api.dart';
@@ -34,8 +35,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
       store: store,
-      child: const MaterialApp(
-        home: HomePage(),
+      child: MaterialApp(
+        home: const HomePage(),
+        routes: <String, WidgetBuilder>{
+          '/photoDetail': (BuildContext context) => const PhotoDetail(),
+        },
       ),
     );
   }
