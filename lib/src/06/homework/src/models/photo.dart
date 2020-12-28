@@ -3,6 +3,7 @@ library photo;
 import 'package:atelieruldigital_flutter/src/06/homework/src/models/serializers.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
+
 // import 'package:built_value/json_object.dart';
 import 'package:built_value/serializer.dart';
 
@@ -22,6 +23,8 @@ abstract class Photo implements Built<Photo, PhotoBuilder> {
   int get width;
 
   int get height;
+
+  int get likes;
 
   @nullable
   String get description;

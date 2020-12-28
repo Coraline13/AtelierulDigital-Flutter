@@ -23,6 +23,8 @@ class _$PhotoSerializer implements StructuredSerializer<Photo> {
       serializers.serialize(object.width, specifiedType: const FullType(int)),
       'height',
       serializers.serialize(object.height, specifiedType: const FullType(int)),
+      'likes',
+      serializers.serialize(object.likes, specifiedType: const FullType(int)),
       'urls',
       serializers.serialize(object.urls,
           specifiedType: const FullType(BuiltMap, const [const FullType(String), const FullType(String)])),
@@ -58,6 +60,9 @@ class _$PhotoSerializer implements StructuredSerializer<Photo> {
         case 'height':
           result.height = serializers.deserialize(value, specifiedType: const FullType(int)) as int;
           break;
+        case 'likes':
+          result.likes = serializers.deserialize(value, specifiedType: const FullType(int)) as int;
+          break;
         case 'description':
           result.description = serializers.deserialize(value, specifiedType: const FullType(String)) as String;
           break;
@@ -83,6 +88,8 @@ class _$Photo extends Photo {
   @override
   final int height;
   @override
+  final int likes;
+  @override
   final String description;
   @override
   final String altDescription;
@@ -91,7 +98,8 @@ class _$Photo extends Photo {
 
   factory _$Photo([void Function(PhotoBuilder) updates]) => (new PhotoBuilder()..update(updates)).build();
 
-  _$Photo._({this.id, this.width, this.height, this.description, this.altDescription, this.urls}) : super._() {
+  _$Photo._({this.id, this.width, this.height, this.likes, this.description, this.altDescription, this.urls})
+      : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('Photo', 'id');
     }
@@ -100,6 +108,9 @@ class _$Photo extends Photo {
     }
     if (height == null) {
       throw new BuiltValueNullFieldError('Photo', 'height');
+    }
+    if (likes == null) {
+      throw new BuiltValueNullFieldError('Photo', 'likes');
     }
     if (urls == null) {
       throw new BuiltValueNullFieldError('Photo', 'urls');
@@ -119,6 +130,7 @@ class _$Photo extends Photo {
         id == other.id &&
         width == other.width &&
         height == other.height &&
+        likes == other.likes &&
         description == other.description &&
         altDescription == other.altDescription &&
         urls == other.urls;
@@ -127,7 +139,9 @@ class _$Photo extends Photo {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc($jc(0, id.hashCode), width.hashCode), height.hashCode), description.hashCode),
+        $jc(
+            $jc($jc($jc($jc($jc(0, id.hashCode), width.hashCode), height.hashCode), likes.hashCode),
+                description.hashCode),
             altDescription.hashCode),
         urls.hashCode));
   }
@@ -138,6 +152,7 @@ class _$Photo extends Photo {
           ..add('id', id)
           ..add('width', width)
           ..add('height', height)
+          ..add('likes', likes)
           ..add('description', description)
           ..add('altDescription', altDescription)
           ..add('urls', urls))
@@ -166,6 +181,12 @@ class PhotoBuilder implements Builder<Photo, PhotoBuilder> {
 
   set height(int height) => _$this._height = height;
 
+  int _likes;
+
+  int get likes => _$this._likes;
+
+  set likes(int likes) => _$this._likes = likes;
+
   String _description;
 
   String get description => _$this._description;
@@ -191,6 +212,7 @@ class PhotoBuilder implements Builder<Photo, PhotoBuilder> {
       _id = _$v.id;
       _width = _$v.width;
       _height = _$v.height;
+      _likes = _$v.likes;
       _description = _$v.description;
       _altDescription = _$v.altDescription;
       _urls = _$v.urls?.toBuilder();
@@ -221,6 +243,7 @@ class PhotoBuilder implements Builder<Photo, PhotoBuilder> {
               id: id,
               width: width,
               height: height,
+              likes: likes,
               description: description,
               altDescription: altDescription,
               urls: urls.build());

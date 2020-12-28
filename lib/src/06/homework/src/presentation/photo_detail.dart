@@ -15,8 +15,9 @@ class PhotoDetail extends StatelessWidget {
             title: Text(photo.altDescription ?? ''),
           ),
           body: Hero(
-              tag: '${photo.id}',
-              child: Image.network(photo.urls['regular']),),
+            tag: '${photo.id}',
+            child: Image.network(photo.urls['regular']),
+          ),
         );
       },
     );
