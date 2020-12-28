@@ -15,10 +15,12 @@ class _$AppState extends AppState {
   final bool isLoading;
   @override
   final String selectedPhoto;
+  @override
+  final String downloadPhoto;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) => (new AppStateBuilder()..update(updates)).build();
 
-  _$AppState._({this.photos, this.nextPage, this.isLoading, this.selectedPhoto}) : super._() {
+  _$AppState._({this.photos, this.nextPage, this.isLoading, this.selectedPhoto, this.downloadPhoto}) : super._() {
     if (photos == null) {
       throw new BuiltValueNullFieldError('AppState', 'photos');
     }
@@ -43,12 +45,15 @@ class _$AppState extends AppState {
         photos == other.photos &&
         nextPage == other.nextPage &&
         isLoading == other.isLoading &&
-        selectedPhoto == other.selectedPhoto;
+        selectedPhoto == other.selectedPhoto &&
+        downloadPhoto == other.downloadPhoto;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc($jc(0, photos.hashCode), nextPage.hashCode), isLoading.hashCode), selectedPhoto.hashCode));
+    return $jf($jc(
+        $jc($jc($jc($jc(0, photos.hashCode), nextPage.hashCode), isLoading.hashCode), selectedPhoto.hashCode),
+        downloadPhoto.hashCode));
   }
 
   @override
@@ -57,7 +62,8 @@ class _$AppState extends AppState {
           ..add('photos', photos)
           ..add('nextPage', nextPage)
           ..add('isLoading', isLoading)
-          ..add('selectedPhoto', selectedPhoto))
+          ..add('selectedPhoto', selectedPhoto)
+          ..add('downloadPhoto', downloadPhoto))
         .toString();
   }
 }
@@ -89,6 +95,12 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
 
   set selectedPhoto(String selectedPhoto) => _$this._selectedPhoto = selectedPhoto;
 
+  String _downloadPhoto;
+
+  String get downloadPhoto => _$this._downloadPhoto;
+
+  set downloadPhoto(String downloadPhoto) => _$this._downloadPhoto = downloadPhoto;
+
   AppStateBuilder();
 
   AppStateBuilder get _$this {
@@ -97,6 +109,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _nextPage = _$v.nextPage;
       _isLoading = _$v.isLoading;
       _selectedPhoto = _$v.selectedPhoto;
+      _downloadPhoto = _$v.downloadPhoto;
       _$v = null;
     }
     return this;
@@ -121,7 +134,11 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     try {
       _$result = _$v ??
           new _$AppState._(
-              photos: photos.build(), nextPage: nextPage, isLoading: isLoading, selectedPhoto: selectedPhoto);
+              photos: photos.build(),
+              nextPage: nextPage,
+              isLoading: isLoading,
+              selectedPhoto: selectedPhoto,
+              downloadPhoto: downloadPhoto);
     } catch (_) {
       String _$failedField;
       try {

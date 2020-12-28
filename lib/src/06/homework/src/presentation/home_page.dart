@@ -1,6 +1,7 @@
-import 'package:atelieruldigital_flutter/src/06/homework/src/actions/set_selected_photo.dart';
 import 'package:atelieruldigital_flutter/src/06/homework/src/containers/is_loading_container.dart';
 import 'package:atelieruldigital_flutter/src/06/homework/src/containers/photos_container.dart';
+import 'package:atelieruldigital_flutter/src/06/homework/src/actions/set_download_photo.dart';
+import 'package:atelieruldigital_flutter/src/06/homework/src/actions/set_selected_photo.dart';
 import 'package:atelieruldigital_flutter/src/06/homework/src/containers/page_container.dart';
 import 'package:atelieruldigital_flutter/src/06/homework/src/models/app_state.dart';
 import 'package:atelieruldigital_flutter/src/06/homework/src/models/photo.dart';
@@ -49,7 +50,7 @@ class HomePage extends StatelessWidget {
                                     itemCount: 20,
                                     itemBuilder: (BuildContext context, int index) {
                                       final Photo photo = photos[index];
-                                      return InkWell(
+                                      return GestureDetector(
                                         onTap: () async {
                                           StoreProvider.of<AppState>(context).dispatch(SetSelectedPhoto(photo.id));
                                           Navigator.pushNamed(context, '/photoDetail');
@@ -64,34 +65,25 @@ class HomePage extends StatelessWidget {
                                               ),
                                             ),
                                             GestureDetector(
-                                              onTap: () {
-                                                print('IT WORKS!');
+                                              onTap: () async {
+                                                StoreProvider.of<AppState>(context)
+                                                    .dispatch(SetDownloadPhoto(photo.id));
                                               },
                                               child: Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Container(
-                                                  width: 40.0,
-                                                  height: 40.0,
+                                                  width: 30.0,
+                                                  height: 30.0,
                                                   decoration: BoxDecoration(
                                                     color: Colors.white70,
                                                     borderRadius: BorderRadius.circular(4.0),
                                                   ),
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    children: <Widget>[
-                                                      const Icon(
-                                                        Icons.favorite,
-                                                        size: 25.0,
-                                                        color: Color(0xff373737),
-                                                      ),
-                                                      Text(
-                                                        '${photo.likes}',
-                                                        style: const TextStyle(
-                                                          fontSize: 10.0,
-                                                        ),
-                                                      ),
-                                                    ],
+                                                  child: const Center(
+                                                    child: Icon(
+                                                      Icons.get_app_rounded,
+                                                      size: 25.0,
+                                                      color: Color(0xff373737),
+                                                    ),
                                                   ),
                                                 ),
                                               ),

@@ -33,4 +33,19 @@ class UnsplashApi {
         .map((dynamic json) => Photo.fromJson(json))
         .toList();
   }
+
+  Future<String> downloadPhoto(String photoId) async {
+    final Uri url = Uri(
+      scheme: 'https',
+      host: 'api.unsplash.com',
+      pathSegments: <String>['photos', photoId, 'download'],
+      queryParameters: <String, String>{
+        'client_id': 'lIjDLBNmGFVSi-sd2_G9k2yB21sRIeQ7r5oPzazgApY',
+      },
+    );
+
+    final Response response = await _client.get(url);
+    final String body = response.body;
+    return jsonDecode(body);
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:atelieruldigital_flutter/src/06/homework/src/actions/get_photos.dart';
+import 'package:atelieruldigital_flutter/src/06/homework/src/actions/set_download_photo.dart';
 import 'package:atelieruldigital_flutter/src/06/homework/src/actions/set_selected_photo.dart';
 import 'package:atelieruldigital_flutter/src/06/homework/src/models/app_state.dart';
 
@@ -17,6 +18,8 @@ AppState reducer(AppState state, dynamic action) {
     builder.isLoading = false;
   } else if (action is SetSelectedPhoto) {
     builder.selectedPhoto = action.photoId;
+  } else if (action is SetDownloadPhoto) {
+    builder.downloadPhoto = action.photoId;
   }
 
   return builder.build();
