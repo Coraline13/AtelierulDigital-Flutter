@@ -1,7 +1,8 @@
-import 'package:atelieruldigital_flutter/src/06/homework/src/actions/set_selected_photo.dart';
 import 'package:atelieruldigital_flutter/src/06/homework/src/containers/is_loading_container.dart';
 import 'package:atelieruldigital_flutter/src/06/homework/src/containers/photos_container.dart';
+import 'package:atelieruldigital_flutter/src/06/homework/src/actions/set_selected_photo.dart';
 import 'package:atelieruldigital_flutter/src/06/homework/src/containers/page_container.dart';
+import 'package:atelieruldigital_flutter/src/06/homework/src/actions/get_photos.dart';
 import 'package:atelieruldigital_flutter/src/06/homework/src/models/app_state.dart';
 import 'package:atelieruldigital_flutter/src/06/homework/src/models/photo.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -46,7 +47,7 @@ class HomePage extends StatelessWidget {
                                       crossAxisSpacing: 16.0,
                                       mainAxisSpacing: 16.0,
                                     ),
-                                    itemCount: 20,
+                                    itemCount: photos.length,
                                     itemBuilder: (BuildContext context, int index) {
                                       final Photo photo = photos[index];
                                       return InkWell(
@@ -101,6 +102,12 @@ class HomePage extends StatelessWidget {
                                       );
                                     },
                                   ),
+                                ),
+                                FlatButton(
+                                  child: const Text('Load more'),
+                                  onPressed: () {
+                                    StoreProvider.of<AppState>(context).dispatch(const GetPhotos());
+                                  },
                                 ),
                               ],
                             );
