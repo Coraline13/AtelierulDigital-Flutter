@@ -16,10 +16,10 @@ An awesome Flutter course.
     - [x] [Basic phrases](lib/src/03/basic_phrases.dart)
 
 * [Week 4](lib/src/04)
-    - [x] [Movies filter](lib/src/04/movies_filter.dart)
+    - [x] [Movies app](lib/src/04/movies_filter.dart)
 
 * [Week 5](lib/src/05)
-    - [x] [Movies filter with Redux](lib/src/05/homework)
+    - [x] [Movies app with Redux](lib/src/05/homework)
 
 * [Week 6](lib/src/06)
-    - [x] [Unsplash filters](lib/src/06/homework)
+    - [x] [Unsplash app with Redux](lib/src/06/homework)
